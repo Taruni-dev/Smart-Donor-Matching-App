@@ -1,0 +1,139 @@
+Smart Donor Matching System for Blood Donation
+
+
+Table of Contents
+1. High-Level Architecture	Page 3
+
+2. Technology Stack	Page 4
+
+3. Technology Design	Page 5
+
+3.1 System Flow Diagram	Page 5
+3.2 Screen Design	Page 6
+
+4. Database Design	Page 7
+
+5. Class Design .................................................................. Page 9
+
+1. High-Level Architecture
+System Architecture Diagram
+
+Description
+1. Frontend (React Native):
+* The user interface where donors and recipients can register, request, or donate blood.
+2. Backend (Python - Flask/Django):
+* Processes user requests and connects the app to the database, AI engine, and notification system.
+3. Database (MySQL/Firebase):
+* Stores user details, blood inventory, donor-recipient records, and donation history.
+4. AI Engine (TensorFlow/Scikit-learn):
+* Matches donors with recipients based on blood type, location, and donation history.
+* Predicts blood expiry to reduce wastage.
+5. Notification System (Firebase Cloud Messaging):
+* Sends real-time alerts to users, such as donation reminders or urgent blood requirements.
+
+2. Technology Stack
+1. Frontend:
+* Framework: React Native
+* Purpose: Provides a cross-platform mobile app interface for donors and recipients.
+2. Backend:
+* Frameworks: Python (Flask/Django)
+* Purpose: Manages the application logic, API handling, and integration with AI and database.
+3. Database:
+* Options: MySQL/Firebase
+* Purpose:
+o Stores user details, blood inventory, and donation history.
+o Ensures efficient data storage and retrieval.
+4. AI Engine:
+* Libraries/Tools: TensorFlow, Scikit-learn
+* Purpose: Implements:
+o Donor Matching System.
+o Blood expiry prediction system.
+5. Notification System:
+* Service: Firebase Cloud Messaging (FCM)
+* Purpose: Sends real-time alerts to users for blood requests or donor matches.
+
+3. Technology Design
+
+3.1 System Flow Diagram
+
+
+
+
+3.2 Screen Design
+
+
+Login/Registration Screen,	Home Screen,	Blood Request Screen Donor Matching Screen ,	 Notifications Screen,	Profile Screen
+
+4. Database Design
+
+
+
+
+Description:
+1. Users Table:
+* Tracks information about donors and recipients.
+* Includes fields for:
+o user_id: Unique ID for each user.
+o name: User's name.
+o blood_type: Blood group (e.g., A+, O-, etc.).
+o location: User's address or area.
+o last_donation_date: Last date the user donated blood.
+o role: Specifies if the user is a "donor" or "recipient."
+2. BloodInventory Table:
+* Manages the stock of blood available in the system.
+* Includes fields for:
+o inventory_id: Unique ID for each blood record.
+o blood_type: Type of blood stored.
+o quantity: Amount of blood available (units).
+
+         o expiry_date: The date by which blood expires. 3 . BloodRequests Table:
+* Handles blood requests made by users.
+* Includes fields for:
+o request_id: Unique ID for each request.
+o user_id: Links the request to the user who made it.
+o blood_type: Type of blood requested.
+o quantity: Amount of blood needed (units).
+o request_date: Date the request was made.
+o status: Tracks the progress of the request (Pending, Matched, Fulfilled).
+4. Notifications Table:
+* Sends updates or alerts to users.
+* Includes fields for:
+o notification_id: Unique ID for each notification.
+o user_id: Links the notification to a user.
+o message: The content of the notification.
+o timestamp: When the notification was sent.
+
+5. Class Design
+
+
+
+
+
+Description:
+BloodInventory:
+o Tracks available blood units by type and expiry date.
+
+o Methods: Check availability and update inventory.
+2. BloodRequest:
+o Manages user requests for blood, including type, quantity, and status (e.g., Pending, Matched).
+o Methods: Create a request and update its status.
+3. User:
+o Represents users with details like name, blood type, location, and last donation date.
+o Methods: Register and update user profiles.
+4. Notification:
+o Handles notifications for users, including messages and timestamps.
+o Method: Send notifications.
+5. AIEngine:
+o Powers smart donor matching based on blood type, location, and history.
+o Methods: Predict matches and analyze data.
+Relationships:
+* Users can create requests and receive notifications.
+* Blood inventory serves multiple requests.
+* AIEngine helps match requests to donors.
+
+
+Summary
+
+The Smart Donor Matching System for Blood Donation is a platform designed to connect blood donors and recipients efficiently. It uses AI to match donors based on location, blood type, and last donation date. The system also tracks blood inventory, manages requests, and sends notifications to donors. This ensures timely donations, reduces wastage, and improves the overall process of blood donation.
+
+
