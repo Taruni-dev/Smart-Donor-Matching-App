@@ -9,4 +9,4 @@ const DonorSchema = new mongoose.Schema({
     fcmToken: { type: String }
 });
 
-module.exports = mongoose.model('Donor', DonorSchema);
+module.exports = mongoose.models.Donor || mongoose.model('Donor', donorSchema);

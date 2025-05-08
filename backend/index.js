@@ -1,46 +1,38 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const donorRoutes = require("./routes/donorRoutes");
-
-
+const express = require('express');
+const mongoose = require('mongoose');
+const admin = require('firebase-admin');
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
 
 const app = express();
+app.use(express.json());  // For parsing application/json
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Middleware
-app.use(express.json());
+// Connect to MongoDB
+mongoose
+  .connect('mongodb://localhost:27017/bloodDonationDB', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('Error connecting to MongoDB', err));
 
-// API Routes
-app.use("/api/donors", donorRoutes);
-app.use((req, res, next) => {
-    console.log(`Incoming request: ${req.method} ${req.url}`);
-    next();
+// Initialize Firebase Admin SDK
+const serviceAccount = require('./firebase-service-account.json');
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
 });
 
+// Routes
+const routes = require('./routes'); // If you have general routes here
+app.use('/api', routes);
 
-// Database connection
-mongoose.connect("mongodb://localhost:27017/blood_donation", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
-    console.log("Connected to MongoDB");
-}).catch(err => {
-    console.error("Database connection error:", err);
-});
+const recipientRoutes = require('./routes/recipientRoutes'); // Donor matching route
+app.use('/api/recipients', recipientRoutes);
 
-app._router.stack.forEach((middleware) => {
-    if (middleware.route) {
-        console.log(middleware.route);
-    } else if (middleware.name === "router") {
-        middleware.handle.stack.forEach((handler) => {
-            if (handler.route) {
-                console.log(handler.route);
-            }
-        });
-    }
-});
-
-// Start server
-const PORT = 3000;
+// Start the server
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
+const bloodRoutes = require('./routes/bloodRoutes');
+app.use('/api/blood', bloodRoutes);
+
