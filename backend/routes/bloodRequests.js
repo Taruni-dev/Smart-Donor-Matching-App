@@ -1,22 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const BloodRequest = require('../models/BloodRequest'); // Ensure correct path
+const Donor = require('../models/Donor');
 
-// Your GET request implementation
-router.get('/blood-requests', async (req, res) => {
-    try {
-        const { bloodType, location, status } = req.query;
-        let query = {};
+// POST /api/request
+router.post('/', async (req, res) => {
+  const { city, bloodType } = req.body;
 
-        if (bloodType) query.bloodType = bloodType;
-        if (location) query.city = location;  // Ensure 'city' is correct
-        if (status) query.status = status;
+  if (!city || !bloodType) {
+    return res.status(400).json({ message: 'City and blood type are required' });
+  }
 
-        const requests = await BloodRequest.find(query);
-        res.json(requests);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+  try {
+    const matchedDonors = await Donor.find({ city, bloodType }); // You can enhance this with case-insensitive or regex matching
+    res.json(matchedDonors);
+  } catch (error) {
+    console.error('Error fetching donors:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 module.exports = router;

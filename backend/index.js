@@ -1,38 +1,51 @@
+// index.js
 const express = require('express');
 const mongoose = require('mongoose');
-const admin = require('firebase-admin');
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./swagger.yaml');
+const authRoutes = require('./routes/authRoutes');
+const donorRoutes = require('./routes/donorRoutes');
+const requestRoutes = require('./routes/bloodRequests');
+const notificationRoutes = require('./routes/notifications');
+const userRoutes = require('./routes/user');
+const Donor = require('./models/Donor');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
-app.use(express.json());  // For parsing application/json
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const PORT = process.env.PORT || 3000;
 
-// Connect to MongoDB
-mongoose
-  .connect('mongodb://localhost:27017/bloodDonationDB', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('Error connecting to MongoDB', err));
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.json());
 
-// Initialize Firebase Admin SDK
-const serviceAccount = require('./firebase-service-account.json');
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+
+// MongoDB connection
+const MONGO_URI = 'mongodb://localhost:27017/bloodDonationDB'; // replace with your MongoDB URI
+
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  // useCreateIndex: true // deprecated in recent mongoose versions
+}).then(() => {
+  console.log('Connected to MongoDB');
+}).catch((err) => {
+  console.error('MongoDB connection error:', err);
 });
 
 // Routes
-const routes = require('./routes'); // If you have general routes here
-app.use('/api', routes);
+app.use('/api/auth', authRoutes);
+app.use('/api/donors', donorRoutes);
+app.use('/api/request', requestRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/users', userRoutes);
 
-const recipientRoutes = require('./routes/recipientRoutes'); // Donor matching route
-app.use('/api/recipients', recipientRoutes);
-
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// Default route
+app.get('/', (req, res) => {
+  res.send('API is running...');
 });
-const bloodRoutes = require('./routes/bloodRoutes');
-app.use('/api/blood', bloodRoutes);
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
