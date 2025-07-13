@@ -1,17 +1,19 @@
-# 🩸 Smart Donor Matching Mobile App
+🩸 Smart Donor Matching Mobile App
+📌 Project Overview
+A mobile app designed to connect blood donors with recipients and display upcoming donation camps nearby.
 
-## 📌 Project Overview
-This is a mobile application designed to connect **blood donors** with **recipients** efficiently.
+🚀 Key Features
+🔍 Search and match blood donors based on location and blood group
 
-## 🚀 Features
-- 🔍 **Find blood donors nearby**
-- 📅 **List of upcoming blood donation camps**
-- 📍 **Location-based donor matching**
-- 📢 **Notifications & Reminders for donations**
+📅 View a list of upcoming blood donation camps
 
-## 🛠️ Tech Stack
-- **Frontend:** React Native  
-- **Backend:** Flask  
-- **Database:** MongoDB  
+👤 Donor profile with donation history
 
+📢 Receive notifications for blood requests
 
+🛠️ Tech Stack
+Frontend: React Native
+
+Backend: Node.js + Express.js
+
+Database: MongoDB

@@ -13,6 +13,7 @@ import RequestScreen from './screens/RequestScreen';
 import MatchedDonorsScreen from './screens/MatchedDonorsScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import NotificationScreen from './screens/NotificationScreen';
+import CampListScreen from './screens/CampListScreen';
 
 
 
@@ -26,12 +27,14 @@ function DrawerNavigator() {
       <Drawer.Screen name="Home" component={HomeScreen} />
       <Drawer.Screen name="Notification" component={NotificationScreen} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
+      <Drawer.Screen name="Nearby Camps" component={CampListScreen} />
       <Drawer.Screen
         name="LogOut"
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-    </Drawer.Navigator>
+      </Drawer.Navigator>
+
   );
 }
 

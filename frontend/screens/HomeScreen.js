@@ -9,7 +9,7 @@ export default function HomeScreen({ navigation }) {
         style={styles.image}
         resizeMode="contain"
       />
-      <Text style={styles.quote}>Smart AI matches blood donors to save lives.</Text>
+      <Text style={styles.quote}>Connecting donors, saving lives.</Text>
       <View style={styles.buttonContainer}>
         <Button title="LOG IN"  color="red" onPress={() => navigation.navigate('Login')} />
         <View style={{ height: 10 }} />
@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     width: '70%',
     gap: 8,
     height: '5%',
-    
   },
   button: {
     backgroundColor: '#e63946',

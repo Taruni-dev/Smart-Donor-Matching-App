@@ -20,7 +20,7 @@ export default function RequestScreen({ navigation }) {
     }
 
     try {
-      const response = await axios.post('http://192.168.43.114:3000/api/request', {
+      const response = await axios.post('http://192.168.248.61:3000/api/request', {
         city: city.trim(),
         bloodType,
       });

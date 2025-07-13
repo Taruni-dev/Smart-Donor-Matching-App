@@ -7,11 +7,11 @@ export default function ProfileScreen() {
   const [loading, setLoading] = useState(true);
 
   // Replace with actual user ID
-  const userId = '683894d41a561910435808dc';  // 👈 Your MongoDB ObjectId
+  const userId = '683894d41a561910435808dc';  
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get(`http://192.168.43.114:3000/api/users/${userId}`);
+      const response = await axios.get(`http://192.168.248.61:3000/api/users/${userId}`);
       setUser(response.data);
     } catch (error) {
       console.error('Error fetching user:', error);
@@ -42,6 +42,8 @@ export default function ProfileScreen() {
     <Text>Location: {user.location || 'N/A'}</Text>
     <Text>Blood Group: {user.bloodGroup || 'N/A'}</Text>
     <Text>Last Donation Date: {user.lastDonationDate ? user.lastDonationDate : 'N/A'}</Text>
+    <Text>Number of Times Donated: {user.donationCount ?? 0}</Text>
+
   </View>
 );
 

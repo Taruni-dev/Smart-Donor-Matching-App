@@ -28,7 +28,7 @@ export default function LoginScreen({ navigation }) {
     setLoading(true); // Show spinner
 
     try {
-      const response = await axios.post('http://192.168.43.114:3000/api/auth/login', {
+      const response = await axios.post('http://192.168.248.61:3000/api/auth/login', {
   email,
   password,
 });
@@ -56,7 +56,7 @@ export default function LoginScreen({ navigation }) {
         style={styles.image}
         resizeMode="contain"
       />
-      <Text style={styles.quote}>Smart AI matches blood donors to save lives.</Text>
+      <Text style={styles.quote}>Connecting donors, saving lives.</Text>
 
       <TextInput
         style={styles.input}

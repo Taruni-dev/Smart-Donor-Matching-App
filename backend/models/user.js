@@ -7,7 +7,11 @@ const userSchema = new mongoose.Schema({
   phone: String,
   location: String,
   bloodGroup: String,
-  date: Date
+  date: Date,
+    donationCount: {
+    type: Number,
+    default: 0
+    },
 });
 
 module.exports = mongoose.model('User', userSchema);

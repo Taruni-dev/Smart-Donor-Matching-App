@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 
 export default function MatchedDonorsScreen({ route }) {
-  const { matchedDonors } = route.params; // <-- Get the matchedDonors passed from RequestScreen
+  const { matchedDonors } = route.params; //  Get the matchedDonors passed from RequestScreen
 
   return (
     <View style={styles.container}>
@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold', 
     textAlign: 'center', 
     marginBottom: 20,
-    color: 'red', // <-- Add this line
+    color: 'red', 
   },
 });
